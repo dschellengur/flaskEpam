@@ -1,0 +1,21 @@
+version: "3.7"
+
+networks:
+  microservice-net:
+    name: microservice-net
+    driver: bridge
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    restart: unless-stopped
+    networks:
+      - microservice-net
+    ports:
+     - "3306:3306"
+    environment:
+     MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - ./mysql/config:/etc/mysql/conf.d
+      - ./mysql/init:/docker-entrypoint-initdb.d/:ro
